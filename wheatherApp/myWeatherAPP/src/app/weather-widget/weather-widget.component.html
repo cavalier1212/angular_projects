@@ -1,0 +1,23 @@
+<select [(ngModel)]="cityName" (ngModelChange)="onCityNameChange($event)">
+  <option *ngFor="let city of cities" [value]="city.value">{{ city.name }}</option>
+</select>
+<div *ngIf="weatherData$ | async as weatherData; else loading">
+  <article class="widget">
+    <div class="weatherIcon"><img src="https://openweathermap.org/img/wn/{{weatherData.weather[0].icon}}@4x.png" alt="" srcset=""></div>
+    <div class="weatherInfo">
+      <div class="temperature"><span>{{ weatherData.main.temp | number: '1.0-0'}}&deg;</span></div>
+      <div class="description">
+        <div class="weatherCondition">{{weatherData.weather[0].description}}</div>
+        <div class="place">{{weatherData.name}}</div>
+      </div>
+    </div>
+    <div class="date">{{ getDateInLocalTimezone(weatherData.dt)}}</div>
+  </article>
+</div>
+<ng-template #loading>
+  <div class="loading">
+    <div class="spinner"></div>
+  </div>
+</ng-template>
+
+
